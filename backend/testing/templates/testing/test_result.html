@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Test result{% endblock %}
+
+{% block content %}
+<h1>{{ attempt.test.title }} — result</h1>
+<h2>Score: {{ attempt.score }}%</h2>
+
+{% for answer in answers %}
+    <div style="border: 1px solid #ddd; padding: 12px; margin-bottom: 12px; background: {% if answer.is_correct %}#e6ffe6{% else %}#ffe6e6{% endif %};">
+        <p><strong>{{ answer.question.question_text }}</strong></p>
+        <p>Your answer: {{ answer.selected_option }} {% if answer.is_correct %}✓{% else %}✗{% endif %}</p>
+        {% if not answer.is_correct %}
+            <p>Correct answer: {{ answer.question.correct_option }}</p>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<p><a href="{% url 'topic_detail' attempt.test.topic.pk %}">← Back to {{ attempt.test.topic.name }}</a></p>
+{% endblock %}

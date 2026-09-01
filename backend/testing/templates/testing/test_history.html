@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Test history{% endblock %}
+
+{% block content %}
+<h1>Test history</h1>
+
+{% if attempts %}
+    <ul>
+        {% for attempt in attempts %}
+            <li>
+                {{ attempt.started_at|date:"d M Y, h:i A" }}
+                — {{ attempt.test.topic.name }}
+                — {% if attempt.score is not None %}{{ attempt.score }}%{% else %}In progress{% endif %}
+                — <a href="{% url 'test_result' attempt.pk %}">View</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tests taken yet.</p>
+{% endif %}
+{% endblock %}

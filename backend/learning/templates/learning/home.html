@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<div style="display: flex; gap: 12px; margin-bottom: 24px;">
+    <div style="border: 1px solid #ddd; padding: 12px; flex: 1;">
+        <p>Topics</p>
+        <h2>{{ total_topics }}</h2>
+    </div>
+    <div style="border: 1px solid #ddd; padding: 12px; flex: 1;">
+        <p>Notes</p>
+        <h2>{{ total_notes }}</h2>
+    </div>
+    <div style="border: 1px solid #ddd; padding: 12px; flex: 1;">
+        <p>Tests taken</p>
+        <h2>{{ total_tests }}</h2>
+    </div>
+    <div style="border: 1px solid #ddd; padding: 12px; flex: 1;">
+        <p>Avg score</p>
+        <h2>{% if avg_score %}{{ avg_score }}%{% else %}—{% endif %}</h2>
+    </div>
+</div>
+
+<h3>Your topics</h3>
+{% if topics %}
+    <ul>
+        {% for topic in topics %}
+            <li><a href="{% url 'topic_detail' topic.pk %}">{{ topic.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No topics yet. <a href="{% url 'topic_add' %}">Add your first topic</a>.</p>
+{% endif %}
+
+<h3>Recent notes</h3>
+{% if recent_notes %}
+    <ul>
+        {% for note in recent_notes %}
+            <li>{{ note.content|truncatewords:10 }} — <a href="{% url 'topic_detail' note.topic.pk %}">{{ note.topic.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No notes yet.</p>
+{% endif %}
+{% endblock %}

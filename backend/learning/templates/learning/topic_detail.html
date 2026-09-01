@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ topic.name }}{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'topic_list' %}">← Topics</a></p>
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>{{ topic.name }}</h1>
+    <a href="{% url 'take_test' topic.pk %}">Take test for this topic</a>
+</div>
+
+<p>Notes: {{ notes.count }} &nbsp;|&nbsp; <a href="{% url 'note_add' topic.pk %}">+ Add note</a></p>
+
+{% if notes %}
+    <ul>
+        {% for note in notes %}
+            <li>
+                {{ note.content|truncatewords:15 }}
+                — <a href="{% url 'note_edit' note.pk %}">Edit</a>
+                — <a href="{% url 'note_delete' note.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No notes yet for this topic.</p>
+{% endif %}
+{% endblock %}

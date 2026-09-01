@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Add topic{% endblock %}
+
+{% block content %}
+<h1>Add topic</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Topic name" required>
+    <button type="submit">Save</button>
+</form>
+{% endblock %}

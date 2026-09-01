@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Topics{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Topics</h1>
+    <a href="{% url 'topic_add' %}">+ Add topic</a>
+</div>
+
+{% if topics %}
+    <ul>
+        {% for topic in topics %}
+            <li>
+                <a href="{% url 'topic_detail' topic.pk %}">{{ topic.name }}</a>
+                — {{ topic.notes.count }} notes
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No topics yet. <a href="{% url 'topic_add' %}">Add your first topic</a>.</p>
+{% endif %}
+{% endblock %}

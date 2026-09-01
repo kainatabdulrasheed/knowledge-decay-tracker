@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ test.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ test.title }}</h1>
+
+<form method="POST" action="{% url 'submit_test' topic.pk %}">
+    {% csrf_token %}
+
+    {% for question in questions %}
+        <div style="border: 1px solid #ddd; padding: 12px; margin-bottom: 12px;">
+            <p><strong>{{ forloop.counter }}. {{ question.question_text }}</strong></p>
+
+            <label><input type="radio" name="question_{{ question.id }}" value="A"> {{ question.option_a }}</label><br>
+            <label><input type="radio" name="question_{{ question.id }}" value="B"> {{ question.option_b }}</label><br>
+            <label><input type="radio" name="question_{{ question.id }}" value="C"> {{ question.option_c }}</label><br>
+            <label><input type="radio" name="question_{{ question.id }}" value="D"> {{ question.option_d }}</label><br>
+        </div>
+    {% endfor %}
+
+    <button type="submit">Submit test</button>
+</form>
+{% endblock %}

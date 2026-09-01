@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ topic.name }} — Tests{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'test_review' %}">← Tests</a></p>
+<h1>{{ topic.name }} — attempts</h1>
+
+{% if attempts %}
+    <ul>
+        {% for attempt in attempts %}
+            <li>
+                {{ attempt.started_at|date:"d M Y, h:i A" }}
+                — {% if attempt.score is not None %}{{ attempt.score }}%{% else %}In progress{% endif %}
+                — <a href="{% url 'test_result' attempt.pk %}">View</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tests taken for this topic yet. <a href="{% url 'take_test' topic.pk %}">Take one now</a>.</p>
+{% endif %}
+{% endblock %}

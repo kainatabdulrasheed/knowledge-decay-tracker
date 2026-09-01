@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Tests{% endblock %}
+
+{% block content %}
+<h1>Tests</h1>
+<p>Select a topic to see the tests you've taken.</p>
+
+{% if topics %}
+    <ul>
+        {% for topic in topics %}
+            <li><a href="{% url 'test_review_attempts' topic.pk %}">{{ topic.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No topics yet.</p>
+{% endif %}
+{% endblock %}

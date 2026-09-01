@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}No test available{% endblock %}
+
+{% block content %}
+<h1>No test available</h1>
+<p>{{ topic.name }} doesn't have a test set up yet. Add questions from the admin panel first.</p>
+<p><a href="{% url 'topic_detail' topic.pk %}">← Back to {{ topic.name }}</a></p>
+{% endblock %}
