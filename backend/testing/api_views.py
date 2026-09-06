@@ -7,7 +7,7 @@ from django.utils import timezone
 from learning.models import Topic
 from .models import Test, Question, Attempt, Answer
 from .serializers import TestSerializer, QuestionSerializer, AttemptSerializer, AnswerSerializer
-
+from .ai_helper import generate_test_from_notes
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -106,3 +106,18 @@ def attempt_detail_api(request, pk):
         })
 
     return Response(data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def generate_test_api(request, topic_id):
+    topic = get_object_or_404(Topic, pk=topic_id, user=request.user)
+
+    test = generate_test_from_notes(topic)
+
+    if test is None:
+        return Response(
+            {'detail': 'Could not generate test. Add some notes to this topic first, or try again.'},
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    return Response(TestSerializer(test).data, status=status.HTTP_201_CREATED)
